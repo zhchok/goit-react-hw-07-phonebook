@@ -1,6 +1,8 @@
+import { useEffect } from "react";
+
+import { deleteContact, getContact } from "Operations/contactOperations";
 import { AiOutlineUserDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { remove } from "redux/contactSlice";
 
 import { Box } from "components/Box/box";
 
@@ -8,10 +10,15 @@ import { Button, Contact, Icon, Item, Text, Title } from "./Contacts.styled";
 
 export function ContactList() {
 	const dispatch = useDispatch();
+
 	const contacts = useSelector(state => state.contacts.items);
 	const filter = useSelector(state => state.contacts.filter);
 	const normalizedFilter = filter.toLocaleLowerCase();
 	const visibleContacts = contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter));
+
+	useEffect(() => {
+		dispatch(getContact());
+	}, [dispatch]);
 
 	return (
 		<Box>
@@ -23,7 +30,7 @@ export function ContactList() {
 							<Contact>
 								{name} : {number}
 							</Contact>
-							<Button type="button" onClick={() => dispatch(remove(id))}>
+							<Button type="button" onClick={() => dispatch(deleteContact(id))}>
 								<Text className="text">Delete</Text>
 								<Icon className="icon">
 									<AiOutlineUserDelete size="24px" fill="#eee" />

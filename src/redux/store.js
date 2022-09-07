@@ -3,6 +3,14 @@ import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 
 
 import { contactReducer } from "./contactSlice";
 
+// const thunk = store => next => action => {
+// 	if (typeof action === "function") {
+// 		action(store.dispatch, store.getState);
+// 		return;
+// 	}
+// 	next(action);
+// };
+
 export const store = configureStore({
 	reducer: {
 		contacts: contactReducer,
@@ -15,4 +23,4 @@ export const store = configureStore({
 		}),
 });
 
-export const persistor = persistStore(store);
+// export const persistor = persistStore(store);
